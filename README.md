@@ -45,7 +45,7 @@ In `schema.rb` it's clear that Riders have a name, a sword, a nickname, and an e
 
 ### Part 2: Using the Dragon Factory
 
-We'll be working in `test/models/dragon_test.rb` for this part. The first three test cases are passing successfully, and offer good examples of using the FactoryGirl's `build( ... )` method.
+We'll be working in `test/models/dragon_test.rb` for this part. The first three test cases are passing successfully, and offer good examples of using the FactoryBot's `build( ... )` method.
 
 #### Testing the .period_alive Method
 The fourth test case is currently skipped, but will be run when we supply a value for the `young_dragon` variable.
@@ -138,7 +138,7 @@ When you're finished this section, you should have:
 ```
 
 ### Part 3: Using the Rider Factory
-Let's move onto `test/models/rider_test.rb`. There's only 1 test case that we need to make pass. Looks like it needs values for the `aegon` and `daenerys` variables. But this time, we are going to use FactoryGirl's `create` method instead of `build`.
+Let's move onto `test/models/rider_test.rb`. There's only 1 test case that we need to make pass. Looks like it needs values for the `aegon` and `daenerys` variables. But this time, we are going to use FactoryBot's `create` method instead of `build`.
 
 Once you've got values you're happy with, put a `binding.pry` statement below and run`rails test` to inspect aegon and daenerys:
 
@@ -162,7 +162,7 @@ Check it out! These are real, persisted objects. They have an id, a created_at, 
  updated_at: Wed, 14 Jun 2017 19:58:48 UTC +00:00>
 ```
 
-In some tests it will be important to have objects that have been saved to the database, which is where FactoryGirl's `create` method comes in handy. As a side effect, you're now done and all your tests are passing!
+In some tests it will be important to have objects that have been saved to the database, which is where FactoryBot's `create` method comes in handy. As a side effect, you're now done and all your tests are passing!
 
 ```sh
 9 runs, 10 assertions, 0 failures, 0 errors, 0 skips
@@ -198,7 +198,7 @@ Seems weird though right? nickname isn't even applicable to this test case, why 
 #### Add it to the Factory
 In this case, because `nickname` is a required (validated) field, it makes sense to add a default to the Factory in `test/factories/riders.rb`
 ```ruby
-FactoryGirl.define do
+FactoryBot.define do
   factory :rider do
     # your code here
   end
@@ -216,7 +216,7 @@ A new validation requirement has cropped up. Now Riders definitely need an email
 
 How can we get around this one? We can try another fixed string in our factory:
 ```ruby
-FactoryGirl.define do
+FactoryBot.define do
   factory :rider do
     nickname "The Conqueror"
     email "rider@westeros.com"
@@ -231,7 +231,7 @@ ActiveRecord::RecordInvalid: Validation failed: Email has already been taken
 
 Sounds like it's time for a dynamic attribute in our factory! We do that by opening a block that generates a string that changes depending on who's calling it, or when it's called. It would be good if a riders email was generated based on their name, right? Like 'aegon@westeros.com' and 'daenerys@westeros.com'? See if you can add the code to `test/factories/riders.rb` that would make that happen.
 ```ruby
-FactoryGirl.define do
+FactoryBot.define do
   factory :rider do
     nickname "The Conqueror"
     email { #your code here to generate a dynamic string }
